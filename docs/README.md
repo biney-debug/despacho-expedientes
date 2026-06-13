@@ -71,4 +71,10 @@ chore(docker): agregar docker-compose.yml con backend y frontend
 ## Seguridad
 
 `.env` **nunca se commitea**. Está en `.gitignore` desde el primer commit.  
-Las credenciales de la API del DP van únicamente en `.env` (variable `API_DP_URL`).
+Las credenciales de prueba de la API del DP no van en el código fuente. La URL de integración se configura únicamente con la variable `API_DP_URL`.
+
+## Avance del turno de Franck
+
+Se implementó el formulario ciudadano de consulta de expediente en el frontend, con validación de campos obligatorios, consumo del endpoint proxy `POST /api/expedientes/consultar`, estado de carga y mensajes de error orientados al ciudadano.
+
+La respuesta exitosa muestra los datos principales del expediente y una línea de tiempo visual para los estados `DOCUMENTO REGISTRADO`, `EN PROCESO` y `SE EMITIO RESPUESTA`, con diseño mobile-first preparado para el ancho base de 375px.

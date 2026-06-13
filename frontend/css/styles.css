@@ -1,4 +1,4 @@
-/* Mobile-first — base: 375px */
+/* Mobile-first - base: 375px */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -9,11 +9,14 @@
 :root {
   --color-primary: #1a3c6e;
   --color-secondary: #c8102e;
+  --color-accent: #007a5a;
+  --color-error: #b3261e;
   --color-bg: #f4f6f9;
   --color-surface: #ffffff;
   --color-text: #1a1a1a;
   --color-text-muted: #555555;
   --color-border: #d0d7e3;
+  --color-border-strong: #8ca0bd;
   --radius: 8px;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   --font: "Segoe UI", system-ui, sans-serif;
@@ -25,7 +28,7 @@ body {
   color: var(--color-text);
   font-size: 16px;
   line-height: 1.5;
-  min-width: 375px;
+  min-width: 320px;
 }
 
 .container {
@@ -35,7 +38,6 @@ body {
   padding: 0 16px;
 }
 
-/* Header */
 .site-header {
   background: var(--color-primary);
   color: #fff;
@@ -53,15 +55,14 @@ body {
   margin-top: 4px;
 }
 
-/* Main */
 main {
-  padding: 24px 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-/* Card */
 .card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -70,7 +71,257 @@ main {
   padding: 20px;
 }
 
-/* Footer */
+.section-heading {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.section-heading h2,
+.resultado-header h2 {
+  color: var(--color-primary);
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+
+.section-heading p,
+.detalle-estado p,
+.timeline-content p {
+  color: var(--color-text-muted);
+}
+
+.eyebrow {
+  color: var(--color-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.form-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.field-group {
+  display: grid;
+  gap: 6px;
+}
+
+label {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  font: inherit;
+  padding: 12px 14px;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.15);
+  outline: none;
+}
+
+.field-help {
+  color: var(--color-text-muted);
+  font-size: 0.86rem;
+}
+
+.primary-button {
+  align-items: center;
+  background: var(--color-primary);
+  border: 0;
+  border-radius: var(--radius);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 700;
+  justify-content: center;
+  margin-top: 20px;
+  min-height: 50px;
+  padding: 12px 18px;
+  width: 100%;
+}
+
+.primary-button:hover {
+  background: #102f5c;
+}
+
+.primary-button:focus {
+  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.22);
+  outline: none;
+}
+
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.message {
+  border-radius: var(--radius);
+  font-weight: 600;
+  margin-top: 16px;
+  padding: 12px 14px;
+}
+
+.message-info {
+  background: #e8f0fb;
+  color: var(--color-primary);
+}
+
+.message-success {
+  background: #e6f4ef;
+  color: var(--color-accent);
+}
+
+.message-error {
+  background: #fdecea;
+  color: var(--color-error);
+}
+
+.resultado-card {
+  display: grid;
+  gap: 20px;
+}
+
+.resultado-header {
+  display: grid;
+  gap: 12px;
+}
+
+.status-pill {
+  align-self: start;
+  background: #e6f4ef;
+  border: 1px solid #b8dece;
+  border-radius: 999px;
+  color: var(--color-accent);
+  display: inline-flex;
+  font-size: 0.86rem;
+  font-weight: 700;
+  padding: 6px 10px;
+}
+
+.detalle-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.detalle-grid div {
+  border-left: 3px solid var(--color-border-strong);
+  padding-left: 12px;
+}
+
+.detalle-grid dt {
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.detalle-grid dd {
+  color: var(--color-text);
+  font-weight: 700;
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+
+.detalle-estado {
+  background: #f8fafc;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.detalle-estado h3 {
+  color: var(--color-primary);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.timeline {
+  display: grid;
+  gap: 0;
+}
+
+.timeline-item {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 38px 1fr;
+  padding-bottom: 18px;
+  position: relative;
+}
+
+.timeline-item::before {
+  background: var(--color-border);
+  content: "";
+  height: 100%;
+  left: 18px;
+  position: absolute;
+  top: 38px;
+  width: 2px;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item:last-child::before {
+  display: none;
+}
+
+.timeline-marker {
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid var(--color-border-strong);
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  display: flex;
+  font-size: 0.74rem;
+  font-weight: 800;
+  height: 38px;
+  justify-content: center;
+  position: relative;
+  width: 38px;
+  z-index: 1;
+}
+
+.timeline-content {
+  padding-top: 2px;
+}
+
+.timeline-content h3 {
+  color: var(--color-text);
+  font-size: 1rem;
+}
+
+.timeline-item.is-complete .timeline-marker {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #ffffff;
+}
+
+.timeline-item.is-current .timeline-marker {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+}
+
+.timeline-item.is-current .timeline-content h3 {
+  color: var(--color-primary);
+}
+
+.timeline-item.is-pending {
+  opacity: 0.76;
+}
+
 .site-footer {
   background: var(--color-primary);
   color: rgba(255, 255, 255, 0.7);
@@ -80,17 +331,31 @@ main {
   margin-top: 40px;
 }
 
-/* Tablet y desktop */
 @media (min-width: 600px) {
   .site-header h1 {
     font-size: 1.5rem;
   }
 
   main {
-    padding: 32px 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 
   .card {
     padding: 28px;
+  }
+
+  .form-grid,
+  .detalle-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .primary-button {
+    width: auto;
+  }
+
+  .resultado-header {
+    align-items: start;
+    grid-template-columns: 1fr auto;
   }
 }

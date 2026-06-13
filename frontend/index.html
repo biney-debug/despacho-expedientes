@@ -3,37 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consulta de Expedientes — Despacho Presidencial</title>
+  <title>Consulta de Expedientes - Despacho Presidencial</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container">
       <h1>Despacho Presidencial</h1>
-      <p class="subtitle">Consulta el estado de tu expediente</p>
+      <p class="subtitle">Consulta el estado de tu expediente en cualquier momento</p>
     </div>
   </header>
 
   <main class="container">
-    <!-- Formulario de búsqueda — implementado por Franck (Turno 2) -->
     <section id="seccion-consulta" aria-label="Formulario de consulta de expediente">
-      <div id="formulario-placeholder" class="card">
-        <p>Formulario de consulta — pendiente Turno 2 (Franck)</p>
-      </div>
+      <form id="formulario-consulta" class="card consulta-card" novalidate>
+        <div class="section-heading">
+          <p class="eyebrow">Portal ciudadano</p>
+          <h2>Consulta de expediente</h2>
+          <p>Ingresa tu numero de expediente y clave de acceso para conocer el estado actual de tu tramite.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label for="usuario">Numero de expediente</label>
+            <input
+              id="usuario"
+              name="usuario"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              placeholder="2026-XXXXXXX"
+              aria-describedby="usuario-ayuda"
+              required
+            />
+            <p id="usuario-ayuda" class="field-help">Formato esperado: 2026-XXXXXXX.</p>
+          </div>
+
+          <div class="field-group">
+            <label for="clave">Clave de acceso</label>
+            <input
+              id="clave"
+              name="clave"
+              type="password"
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              placeholder="Ingresa tu clave"
+              required
+            />
+          </div>
+        </div>
+
+        <button id="boton-consultar" class="primary-button" type="submit">
+          Consultar estado
+        </button>
+
+        <div id="mensaje-consulta" class="message" role="status" aria-live="polite" hidden></div>
+      </form>
     </section>
 
-    <!-- Resultado y línea de tiempo — implementado por Franck (Turno 2) -->
-    <section id="seccion-resultado" aria-label="Estado del expediente" hidden>
-    </section>
+    <section id="seccion-resultado" aria-label="Estado del expediente" hidden></section>
 
-    <!-- Módulo de orientación — implementado por Antuaneth (Turno 3) -->
-    <section id="seccion-orientacion" aria-label="Orientación sobre tipos de trámite">
-    </section>
+    <section id="seccion-orientacion" aria-label="Orientacion sobre tipos de tramite"></section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>Hackaton TransformaGob 2026 &mdash; Equipo 1500</p>
+      <p>Hackaton TransformaGob 2026 - Equipo 1500</p>
     </div>
   </footer>
 
