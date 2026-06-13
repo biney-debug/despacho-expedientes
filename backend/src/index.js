@@ -77,6 +77,34 @@ const swaggerSpec = {
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.type("html").send(`
+    <!doctype html>
+    <html lang="es">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>API Proxy - Despacho Presidencial</title>
+        <style>
+          body { font-family: system-ui, sans-serif; line-height: 1.5; margin: 2rem; color: #1a1a1a; }
+          main { max-width: 720px; }
+          code { background: #f4f6f9; border: 1px solid #d0d7e3; border-radius: 6px; padding: 0.15rem 0.35rem; }
+          a { color: #1a3c6e; font-weight: 700; }
+        </style>
+      </head>
+      <body>
+        <main>
+          <h1>API Proxy - Despacho Presidencial</h1>
+          <p>Backend activo. Esta API no tiene una pantalla de usuario en este puerto.</p>
+          <p>Documentacion interactiva: <a href="/api-docs">/api-docs</a></p>
+          <p>Endpoint principal: <code>POST /api/expedientes/consultar</code></p>
+          <p>Portal ciudadano: <a href="http://localhost:8080">http://localhost:8080</a></p>
+        </main>
+      </body>
+    </html>
+  `);
+});
+
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/expedientes", expedientesRouter);
 
