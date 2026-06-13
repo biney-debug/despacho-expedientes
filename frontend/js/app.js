@@ -20,6 +20,8 @@ const formulario = document.querySelector("#formulario-consulta");
 const usuarioInput = document.querySelector("#usuario");
 const claveInput = document.querySelector("#clave");
 const botonConsultar = document.querySelector("#boton-consultar");
+const btnTexto = botonConsultar.querySelector(".btn-texto");
+const btnSpinner = botonConsultar.querySelector(".btn-spinner");
 const mensajeConsulta = document.querySelector("#mensaje-consulta");
 const seccionResultado = document.querySelector("#seccion-resultado");
 
@@ -30,10 +32,12 @@ formulario.addEventListener("submit", async (event) => {
   const clave = claveInput.value.trim();
 
   ocultarResultado();
+  limpiarErroresCampos();
 
   const validacion = validarFormulario(usuario, clave);
   if (!validacion.esValido) {
     mostrarMensaje(validacion.mensaje, "error");
+    marcarCampoInvalido(validacion.campo);
     return;
   }
 
@@ -73,26 +77,48 @@ function validarFormulario(usuario, clave) {
   if (!usuario && !clave) {
     return {
       esValido: false,
-      mensaje: "Ingresa el numero de expediente y la clave de acceso.",
+      campo: "usuario",
+      mensaje: "Ingresa el numero de expediente y la clave de acceso para continuar.",
     };
   }
 
   if (!usuario) {
-    return { esValido: false, mensaje: "Ingresa el numero de expediente." };
-  }
-
-  if (!clave) {
-    return { esValido: false, mensaje: "Ingresa la clave de acceso." };
+    return {
+      esValido: false,
+      campo: "usuario",
+      mensaje: "El numero de expediente es obligatorio. Ejemplo: 2026-0010582.",
+    };
   }
 
   if (!/^2026-\d{7}$/.test(usuario)) {
     return {
       esValido: false,
-      mensaje: "El numero de expediente debe tener el formato 2026-XXXXXXX.",
+      campo: "usuario",
+      mensaje: "El formato del expediente no es valido. Debe ser 2026-XXXXXXX (siete digitos).",
+    };
+  }
+
+  if (!clave) {
+    return {
+      esValido: false,
+      campo: "clave",
+      mensaje: "La clave de acceso es obligatoria. La encontraras en el comprobante de tu tramite.",
     };
   }
 
   return { esValido: true };
+}
+
+function marcarCampoInvalido(idCampo) {
+  if (!idCampo) return;
+  const campo = document.querySelector(`#${idCampo}`);
+  if (!campo) return;
+  campo.setAttribute("aria-invalid", "true");
+  campo.focus();
+}
+
+function limpiarErroresCampos() {
+  [usuarioInput, claveInput].forEach((campo) => campo.removeAttribute("aria-invalid"));
 }
 
 function obtenerEndpointConsulta() {
@@ -109,7 +135,9 @@ function obtenerEndpointConsulta() {
 
 function setCargando(estaCargando) {
   botonConsultar.disabled = estaCargando;
-  botonConsultar.textContent = estaCargando ? "Consultando..." : "Consultar estado";
+  btnTexto.textContent = estaCargando ? "Consultando..." : "Consultar estado";
+  btnSpinner.hidden = !estaCargando;
+  formulario.setAttribute("aria-busy", String(estaCargando));
 }
 
 function mostrarMensaje(texto, tipo) {

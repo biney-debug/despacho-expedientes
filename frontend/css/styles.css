@@ -322,6 +322,160 @@ input:focus {
   opacity: 0.76;
 }
 
+/* ——— Spinner del botón ——— */
+@keyframes girar {
+  to { transform: rotate(360deg); }
+}
+
+.btn-spinner {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  display: inline-block;
+  height: 16px;
+  margin-left: 8px;
+  animation: girar 0.75s linear infinite;
+  width: 16px;
+  flex-shrink: 0;
+}
+
+/* ——— Validación accesible aria-invalid ——— */
+input[aria-invalid="true"] {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.15);
+}
+
+/* ——— Acordeón de orientación ——— */
+.acordeon {
+  display: grid;
+  gap: 0;
+  margin-bottom: 28px;
+}
+
+.tramite-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tramite-item:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.tramite-titulo {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  gap: 10px;
+  list-style: none;
+  padding: 14px 0;
+  user-select: none;
+}
+
+.tramite-titulo::-webkit-details-marker {
+  display: none;
+}
+
+.tramite-titulo:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.acordeon-indicador {
+  border-right: 2px solid var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  display: inline-block;
+  height: 8px;
+  margin-left: auto;
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  width: 8px;
+  flex-shrink: 0;
+}
+
+details[open] .acordeon-indicador {
+  transform: rotate(-135deg);
+}
+
+.tramite-icono {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.tramite-contenido {
+  display: grid;
+  gap: 10px;
+  padding: 0 0 16px 28px;
+}
+
+.tramite-descripcion {
+  color: var(--color-text-muted);
+}
+
+.tramite-contenido h4 {
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-top: 4px;
+}
+
+.tramite-contenido ul {
+  display: grid;
+  gap: 6px;
+  padding-left: 20px;
+}
+
+.tramite-contenido li {
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.tramite-tiempo {
+  background: #f0f5ff;
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  padding: 8px 12px;
+}
+
+/* ——— FAQs ——— */
+.faqs {
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+}
+
+.faqs h3 {
+  color: var(--color-primary);
+  font-size: 1rem;
+  margin-bottom: 14px;
+}
+
+.faqs-lista {
+  display: grid;
+  gap: 14px;
+}
+
+.faq-item {
+  border-left: 3px solid var(--color-border-strong);
+  padding-left: 12px;
+}
+
+.faq-item dt {
+  color: var(--color-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.faq-item dd {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 .site-footer {
   background: var(--color-primary);
   color: rgba(255, 255, 255, 0.7);
