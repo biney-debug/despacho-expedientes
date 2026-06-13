@@ -1,0 +1,96 @@
+/* Mobile-first — base: 375px */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --color-primary: #1a3c6e;
+  --color-secondary: #c8102e;
+  --color-bg: #f4f6f9;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #555555;
+  --color-border: #d0d7e3;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --font: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 1.5;
+  min-width: 375px;
+}
+
+.container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header */
+.site-header {
+  background: var(--color-primary);
+  color: #fff;
+  padding: 20px 0;
+}
+
+.site-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.site-header .subtitle {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* Main */
+main {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Card */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+
+/* Footer */
+.site-footer {
+  background: var(--color-primary);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 16px 0;
+  font-size: 0.8rem;
+  margin-top: 40px;
+}
+
+/* Tablet y desktop */
+@media (min-width: 600px) {
+  .site-header h1 {
+    font-size: 1.5rem;
+  }
+
+  main {
+    padding: 32px 16px;
+  }
+
+  .card {
+    padding: 28px;
+  }
+}
