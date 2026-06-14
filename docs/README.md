@@ -115,7 +115,9 @@ El portal cumple con las pautas **WCAG 2.1 nivel AA**:
 
 **Documentación inicial:** se crearon `docs/README.md`, `docs/arquitectura.md`, `docs/api-referencia.md` y `docs/decisiones.md` con el ADR-001 que registra la decisión de arquitectura de proxy backend (contexto, decisión y consecuencias).
 
-**Rate limiting (corrección en producción):** se detectó que `express-rate-limit` no aplicaba correctamente en Hugging Face Spaces porque la cadena Cloudflare + HF load balancer hace que `req.ip` resuelva siempre a la IP del proxy, no a la del ciudadano. Se corrigió con `app.set("trust proxy", 1)` y un `keyGenerator` personalizado que lee el primer valor de `X-Forwarded-For` directamente, garantizando que cada usuario tenga su propio bucket de 20 req/min. Verificado: requests 1–20 pasan, request 21 recibe `429` con mensaje ciudadano en JSON.
+**Rate limiting — primera corrección:** se detectó que `express-rate-limit` no aplicaba correctamente en Hugging Face Spaces porque la cadena Cloudflare + HF load balancer hace que `req.ip` resuelva siempre a la IP del proxy, no a la del ciudadano. Se corrigió con `app.set("trust proxy", 1)` y un `keyGenerator` personalizado que lee el primer valor de `X-Forwarded-For` directamente.
+
+**Rate limiting — corrección definitiva (por usuario de negocio):** se identificó una segunda causa de fallo: HF Spaces corre múltiples réplicas del contenedor sin estado compartido (visible en el header `x-proxied-replica`), por lo que cada réplica tiene su propio contador en memoria y los requests se distribuyen sin que ninguna instancia llegue al límite por IP. Se cambió el `keyGenerator` para usar `req.body.usuario` como clave de rate limit: un mismo número de expediente no puede consultarse más de 10 veces en 15 minutos, sin importar en qué réplica se procese el request. Se actualizó `trust proxy` a `true` y se agregó `skip` para ignorar requests sin `usuario` (Swagger, health checks). Verificado: requests 1–10 pasan, request 11 recibe `429`; un expediente distinto no queda bloqueado.
 
 ## Avance del turno de Franck
 
