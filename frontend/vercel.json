@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://Tcajox-despacho-expedientes-backend.hf.space/api/:path*"
+      "destination": "https://tcajox-despacho-expedientes-backend.hf.space/api/:path*"
     }
   ]
 }
