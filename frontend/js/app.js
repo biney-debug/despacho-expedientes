@@ -211,11 +211,186 @@ function renderResultado(data) {
           renderEstadoTimeline(estado, index, indiceActual)
         ).join("")}
       </div>
+
+      <div class="resultado-acciones">
+        <button id="boton-constancia" class="secondary-button" type="button">
+          Descargar constancia
+        </button>
+      </div>
     </article>
   `;
 
   seccionResultado.hidden = false;
   seccionResultado.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  const botonConstancia = seccionResultado.querySelector("#boton-constancia");
+  botonConstancia.addEventListener("click", () => {
+    generarConstancia({
+      numeroExpediente: data.numero_expediente || usuarioInput.value.trim(),
+      tramite: data.tramite || "Tramite registrado",
+      estado: formatearEstado(estadoActual),
+      fechaConsulta: new Date(),
+    });
+  });
+}
+
+function generarConstancia({ numeroExpediente, tramite, estado, fechaConsulta }) {
+  const fechaTexto = fechaConsulta.toLocaleString("es-PE", {
+    dateStyle: "long",
+    timeStyle: "short",
+  });
+
+  const ventana = window.open("", "_blank");
+
+  if (!ventana) {
+    mostrarMensaje(
+      "No se pudo abrir la constancia. Habilita las ventanas emergentes para este sitio e intenta nuevamente.",
+      "error"
+    );
+    return;
+  }
+
+  ventana.document.write(`
+    <!doctype html>
+    <html lang="es">
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Constancia de consulta - Expediente ${escaparHtml(numeroExpediente)}</title>
+        <style>
+          :root {
+            --color-primary: #6e1423;
+            --color-text: #1a1a1a;
+            --color-text-muted: #555555;
+            --color-border: #d0d7e3;
+          }
+
+          * { box-sizing: border-box; margin: 0; padding: 0; }
+
+          body {
+            font-family: Georgia, "Times New Roman", Cambria, serif;
+            color: var(--color-text);
+            padding: 40px;
+          }
+
+          .constancia {
+            border: 2px solid var(--color-primary);
+            border-radius: 8px;
+            padding: 32px;
+            max-width: 640px;
+            margin: 0 auto;
+          }
+
+          .constancia-header {
+            border-bottom: 3px solid var(--color-primary);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+          }
+
+          .constancia-header p {
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          }
+
+          .constancia-header h1 {
+            color: var(--color-primary);
+            font-size: 1.3rem;
+            margin-top: 4px;
+          }
+
+          .constancia-titulo {
+            font-size: 1.05rem;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 24px;
+          }
+
+          dl {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 28px;
+          }
+
+          .constancia dt {
+            color: var(--color-text-muted);
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+          }
+
+          .constancia dd {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-top: 2px;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 6px;
+          }
+
+          .constancia-footer {
+            border-top: 1px solid var(--color-border);
+            padding-top: 16px;
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            line-height: 1.5;
+          }
+
+          @media print {
+            body { padding: 0; }
+            .constancia { border: none; }
+          }
+        </style>
+      </head>
+      <body>
+        <main class="constancia">
+          <header class="constancia-header">
+            <p>Gobierno del Peru</p>
+            <h1>Despacho Presidencial</h1>
+          </header>
+
+          <p class="constancia-titulo">Constancia de consulta de expediente</p>
+
+          <dl>
+            <div>
+              <dt>Numero de expediente</dt>
+              <dd>${escaparHtml(numeroExpediente)}</dd>
+            </div>
+            <div>
+              <dt>Tipo de tramite</dt>
+              <dd>${escaparHtml(tramite)}</dd>
+            </div>
+            <div>
+              <dt>Estado actual</dt>
+              <dd>${escaparHtml(estado)}</dd>
+            </div>
+            <div>
+              <dt>Fecha y hora de consulta</dt>
+              <dd>${escaparHtml(fechaTexto)}</dd>
+            </div>
+          </dl>
+
+          <p class="constancia-footer">
+            Este documento es una constancia informativa generada por el portal ciudadano de
+            consulta de expedientes del Despacho Presidencial. No constituye un documento oficial
+            ni reemplaza las notificaciones formales del tramite.
+          </p>
+        </main>
+        <script>
+          window.onload = function () {
+            window.print();
+          };
+        </script>
+      </body>
+    </html>
+  `);
+
+  ventana.document.close();
+  ventana.focus();
 }
 
 function renderEstadoTimeline(estado, index, indiceActual) {

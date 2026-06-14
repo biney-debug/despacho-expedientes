@@ -23,7 +23,7 @@ Portal web para que ciudadanos peruanos consulten el estado de su expediente ant
 - **Infraestructura:** Docker Compose (backend Node + frontend nginx)
 - **API externa:** Despacho Presidencial (integración via proxy propio)
 
-## Instalación local
+## Despliegue en 3 pasos
 
 ```bash
 # 1. Clonar y entrar al proyecto
@@ -32,15 +32,20 @@ cd despacho-expedientes
 
 # 2. Configurar variables de entorno
 cp .env.example .env
-# Editar .env y completar: API_DP_URL y PORT
+# Editar .env y completar: API_DP_URL (y opcionalmente PORT, CORS_ORIGIN, RATE_LIMIT_MAX)
 
-# 3. Instalar dependencias del backend
-cd backend && npm install && cd ..
-
-# 4. Levantar con Docker Compose
+# 3. Levantar con Docker Compose
 docker compose up
 # Backend: http://localhost:3000
 # Frontend: http://localhost:8080
+```
+
+No se requiere instalar Node.js ni dependencias manualmente: la imagen del backend instala todo durante el build de `docker compose up`.
+
+### Desarrollo local sin Docker (opcional)
+
+```bash
+cd backend && npm install && npm run dev
 ```
 
 ## Flujo de contribución (relay entre turnos)
@@ -124,3 +129,32 @@ En accesibilidad: se agregó spinner visual en el botón durante la consulta, `a
 | API caída / sin respuesta | `dpService` captura el error de red y devuelve `503` "El servicio del Despacho Presidencial no está disponible en este momento" |
 
 También se verificaron los 4 expedientes de prueba (los tres estados `DOCUMENTO REGISTRADO`, `EN PROCESO` y `SE EMITIO RESPUESTA`, incluyendo la variante con tilde `SE EMITIÓ RESPUESTA`) y se confirmó que `normalizarEstado` los mapea correctamente en la línea de tiempo.
+
+## Avance del turno de Cristina (continuación)
+
+**Identidad visual institucional:** se reemplazó el color primario azul (`#1a3c6e`) por guinda (`#6e1423`) en botones, estados de foco, mensajes y acentos del portal, validando que el contraste con texto blanco siga cumpliendo WCAG AA (~11.7:1). Se cambió la tipografía base a una familia serif formal (`Georgia`, `Times New Roman`, `Cambria`) acorde a un portal del Estado.
+
+**Limpieza de iconografía:** se quitaron los emojis usados como iconos en el acordeón de orientación de trámites (📋✉️⚖️🔔) y la regla CSS `.tramite-icono` asociada, que ya no se usaba.
+
+**Mostrar/ocultar clave:** se agregó un botón con iconos SVG (ojo / ojo tachado) dentro del campo "Clave de acceso" que alterna entre `type="password"` y `type="text"`, con `aria-pressed` y `aria-label` dinámicos para mantener accesibilidad.
+
+**Pendiente para Carlos:** validar que `docker compose up` siga construyendo correctamente el frontend (nginx) con estos cambios de HTML/CSS/JS antes del despliegue final.
+
+## Avance del turno de Carlos
+
+**Validación de despliegue final:** se ejecutó `docker compose up --build` en el repositorio y también en una carpeta clonada limpia (sin `node_modules` ni `.env`), siguiendo exactamente los pasos de la sección "Despliegue en 3 pasos". Backend (`:3000`) y frontend (`:8080`) levantan correctamente, incluyendo los cambios visuales (color guinda, tipografía serif, botón mostrar/ocultar clave) servidos por nginx.
+
+Se verificaron los 4 escenarios de la API (expediente válido, clave incorrecta, campos vacíos, API caída), el proxy `nginx → backend`, CORS por origen y el rate limiting (20 req/min), todos funcionando como se documentó en el avance de Cristina.
+
+**Limpieza de `docker-compose.yml`:** se eliminó el atributo `version: "3.9"`, marcado como obsoleto por Docker Compose v5 (generaba un warning en cada `docker compose up`/`ps`/`logs`).
+
+**Instrucciones de despliegue:** se reescribió la sección de instalación como "Despliegue en 3 pasos" (clonar, configurar `.env`, `docker compose up`), aclarando que no se requiere instalar Node.js ni dependencias manualmente — la imagen del backend las instala durante el build. Se agregó una nota aparte para desarrollo local sin Docker (`npm install && npm run dev`).
+
+**Constancia de consulta (diferenciador para el jurado):** tras una consulta exitosa, el portal muestra un botón **"Descargar constancia"** debajo de la línea de tiempo. Al hacer clic, se abre una pestaña nueva con un documento HTML imprimible con identidad institucional (Gobierno del Perú / Despacho Presidencial, color guinda, tipografía serif) que incluye:
+
+- Número de expediente
+- Tipo de trámite
+- Estado actual
+- Fecha y hora de consulta
+
+La pestaña dispara automáticamente `window.print()`, permitiendo al ciudadano imprimir el documento o guardarlo como PDF desde el diálogo de impresión del navegador. El documento aclara que es informativo y no reemplaza notificaciones oficiales. Probado end-to-end con Playwright contra el stack levantado con Docker Compose: la consulta se renderiza correctamente y la constancia se genera con los datos esperados, sin errores de consola.

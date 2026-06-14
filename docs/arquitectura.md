@@ -36,3 +36,7 @@ Ciudadano (celular/browser)
 - **Separación de capas:** `routes/` → routing; `services/` → lógica externa; `middleware/` → validación.
 - **Sin secretos en código:** Toda URL o credencial va en variables de entorno.
 - **Mobile-first:** Base CSS en 375px, breakpoints hacia arriba.
+
+## Constancia de consulta
+
+Tras una consulta exitosa, `frontend/js/app.js` genera una **constancia imprimible** en una pestaña nueva mediante `window.open()` + `window.print()`. Es un documento HTML autocontenido (estilos inline, sin dependencias externas) con los datos de la consulta (expediente, trámite, estado, fecha/hora). No involucra al backend ni genera archivos en el servidor: todo ocurre en el cliente, en el momento de la consulta.
