@@ -158,3 +158,17 @@ Se verificaron los 4 escenarios de la API (expediente válido, clave incorrecta,
 - Fecha y hora de consulta
 
 La pestaña dispara automáticamente `window.print()`, permitiendo al ciudadano imprimir el documento o guardarlo como PDF desde el diálogo de impresión del navegador. El documento aclara que es informativo y no reemplaza notificaciones oficiales. Probado end-to-end con Playwright contra el stack levantado con Docker Compose: la consulta se renderiza correctamente y la constancia se genera con los datos esperados, sin errores de consola.
+
+## Avance del turno de Carlos (despliegue final en la nube)
+
+**Backend en Hugging Face Spaces:** el Space `Tcajox/despacho-expedientes-backend` (SDK Docker, puerto 7860) quedó en estado `RUNNING` con las variables de entorno configuradas en *Settings → Variables and secrets*: `API_DP_URL`, `PORT=7860`, `RATE_LIMIT_MAX=20` y `CORS_ORIGIN` apuntando al dominio de Vercel del frontend.
+
+**Frontend en Vercel:** desplegado desde `frontend/` con `vercel.json` (rewrite de `/api/*` hacia el Space de HF) y `.vercelignore` excluyendo `server.js`/`nginx.conf`. Se agregó `"framework": null` en `vercel.json` para evitar que Vercel detectara el proyecto como una app Node por la presencia de `server.js` y fallara el build con "No entrypoint found".
+
+**Verificación end-to-end en producción:**
+- Frontend: https://frontend-mu-six-70.vercel.app → `200 OK`
+- Backend: https://tcajox-despacho-expedientes-backend.hf.space → `200 OK` (`/api-docs` con Swagger UI)
+- CORS validado: `access-control-allow-origin` responde con el dominio de Vercel
+- Consulta de expediente de prueba (`2026-0010582` / `4176`) a través del rewrite `frontend → /api/expedientes/consultar` devuelve `200` con datos y estado `EN PROCESO`, igual que en local
+
+**Portal en producción:** https://frontend-mu-six-70.vercel.app
