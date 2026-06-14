@@ -72,7 +72,7 @@ const swaggerSpec = {
   },
 };
 
-app.set("trust proxy", 1);
+app.set("trust proxy", true);
 
 const allowedOrigins = (process.env.CORS_ORIGIN || "")
   .split(",")

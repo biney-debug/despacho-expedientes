@@ -1,18 +1,20 @@
 const rateLimit = require("express-rate-limit");
 
-module.exports = rateLimit({
-  windowMs: 60 * 1000,
-  max: Number(process.env.RATE_LIMIT_MAX) || 20,
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
   standardHeaders: true,
   legacyHeaders: false,
-  // Reads real client IP from X-Forwarded-For regardless of proxy hop count (HF Spaces, Cloudflare, etc.)
   keyGenerator: (req) => {
-    const xff = req.headers["x-forwarded-for"];
-    if (xff) return xff.split(",")[0].trim();
-    return req.socket.remoteAddress || "unknown";
+    return req.body?.usuario || "anonimo";
   },
   message: {
     success: false,
-    error: "Has realizado demasiadas consultas. Espera un momento e intenta nuevamente.",
+    error: "Has realizado demasiadas consultas sobre este expediente. Espera unos minutos e intenta de nuevo.",
+  },
+  skip: (req) => {
+    return !req.body?.usuario;
   },
 });
+
+module.exports = limiter;
