@@ -413,7 +413,7 @@ details[open] .acordeon-indicador {
   color: var(--color-text-muted);
 }
 
-.tramite-contenido h4 {
+.tramite-contenido h3 {
   color: var(--color-primary);
   font-size: 0.9rem;
   text-transform: uppercase;

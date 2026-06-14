@@ -48,8 +48,10 @@
               inputmode="numeric"
               autocomplete="one-time-code"
               placeholder="Ingresa tu clave"
+              aria-describedby="clave-ayuda"
               required
             />
+            <p id="clave-ayuda" class="field-help">Clave de 4 digitos entregada en Mesa de Partes.</p>
           </div>
         </div>
 
@@ -71,9 +73,9 @@
         <p>Conoce los requisitos y tiempos estimados de cada procedimiento ante el Despacho Presidencial.</p>
       </div>
 
-      <div class="acordeon" role="list">
+      <div class="acordeon">
 
-        <details class="tramite-item" role="listitem">
+        <details class="tramite-item">
           <summary class="tramite-titulo">
             <span class="tramite-icono" aria-hidden="true">📋</span>
             Solicitud de Audiencia Presidencial
@@ -81,7 +83,7 @@
           </summary>
           <div class="tramite-contenido">
             <p class="tramite-descripcion">Pedido formal para reunirse con el Presidente de la Republica o su representante para tratar un asunto de interes personal, colectivo o de interes publico.</p>
-            <h4>Requisitos</h4>
+            <h3>Requisitos</h3>
             <ul>
               <li>DNI vigente del solicitante</li>
               <li>Carta de solicitud firmada dirigida al Presidente, con motivo claro y concreto</li>
@@ -91,7 +93,7 @@
           </div>
         </details>
 
-        <details class="tramite-item" role="listitem">
+        <details class="tramite-item">
           <summary class="tramite-titulo">
             <span class="tramite-icono" aria-hidden="true">✉️</span>
             Peticion Ciudadana
@@ -99,7 +101,7 @@
           </summary>
           <div class="tramite-contenido">
             <p class="tramite-descripcion">Solicitud escrita que un ciudadano dirige al Presidente de la Republica sobre cualquier asunto de interes personal, colectivo o de interes publico que sea de su competencia.</p>
-            <h4>Requisitos</h4>
+            <h3>Requisitos</h3>
             <ul>
               <li>DNI vigente del solicitante</li>
               <li>Carta con nombre completo, domicilio y exposicion clara del pedido</li>
@@ -109,7 +111,7 @@
           </div>
         </details>
 
-        <details class="tramite-item" role="listitem">
+        <details class="tramite-item">
           <summary class="tramite-titulo">
             <span class="tramite-icono" aria-hidden="true">⚖️</span>
             Recurso de Reconsideracion
@@ -117,7 +119,7 @@
           </summary>
           <div class="tramite-contenido">
             <p class="tramite-descripcion">Impugnacion de un acto administrativo previo emitido por el Despacho Presidencial, solicitando su revision y modificacion sobre la base de una nueva prueba documental.</p>
-            <h4>Requisitos</h4>
+            <h3>Requisitos</h3>
             <ul>
               <li>DNI vigente del recurrente</li>
               <li>Copia del acto administrativo que se impugna</li>
@@ -128,7 +130,7 @@
           </div>
         </details>
 
-        <details class="tramite-item" role="listitem">
+        <details class="tramite-item">
           <summary class="tramite-titulo">
             <span class="tramite-icono" aria-hidden="true">🔔</span>
             Denuncia Administrativa
@@ -136,7 +138,7 @@
           </summary>
           <div class="tramite-contenido">
             <p class="tramite-descripcion">Comunicacion formal sobre presuntas irregularidades, faltas o infracciones cometidas por funcionarios o entidades del Poder Ejecutivo que sean de competencia del Despacho Presidencial.</p>
-            <h4>Requisitos</h4>
+            <h3>Requisitos</h3>
             <ul>
               <li>DNI vigente del denunciante</li>
               <li>Descripcion detallada del hecho: fechas, lugares y personas involucradas</li>

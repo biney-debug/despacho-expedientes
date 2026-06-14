@@ -122,12 +122,8 @@ function limpiarErroresCampos() {
 }
 
 function obtenerEndpointConsulta() {
-  const { protocol, hostname, port } = window.location;
-  const host = hostname || "localhost";
-  const origenBackendLocal = `http://${host}:3000`;
-
-  if (protocol === "file:" || port === "8080") {
-    return `${origenBackendLocal}/api/expedientes/consultar`;
+  if (window.location.protocol === "file:") {
+    return "http://localhost:3000/api/expedientes/consultar";
   }
 
   return "/api/expedientes/consultar";
@@ -231,15 +227,12 @@ function formatearEstado(estado) {
 }
 
 function formatearDias(dias) {
-  if (dias === 1) {
-    return "1 dia";
-  }
+  const n = Number(dias);
 
-  if (Number.isFinite(Number(dias))) {
-    return `${dias} dias`;
-  }
-
-  return "No informado";
+  if (!Number.isFinite(n)) return "No informado";
+  if (n === 0) return "Resuelto";
+  if (n === 1) return "1 dia habil";
+  return `${n} dias habiles`;
 }
 
 function escaparHtml(valor) {
