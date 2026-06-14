@@ -13,8 +13,8 @@ Content-Type: application/json
 
 ```json
 {
-  "usuario": "2026-0010582",
-  "clave": "4176"
+  "usuario": "2026-XXXXXXX",
+  "clave": "XXXX"
 }
 ```
 
@@ -24,7 +24,7 @@ Content-Type: application/json
 {
   "success": true,
   "data": {
-    "numero_expediente": "2026-0010582",
+    "numero_expediente": "2026-XXXXXXX",
     "tramite": "Solicitud de Audiencia Presidencial",
     "administrado": "Juan Pérez García",
     "estado_actual": "EN PROCESO",

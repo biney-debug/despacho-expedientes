@@ -27,15 +27,12 @@ const swaggerSpec = {
                 type: "object",
                 required: ["usuario", "clave"],
                 properties: {
-                  usuario: { type: "string", example: "2026-0010582" },
-                  clave: { type: "string", example: "4176" },
+                  usuario: { type: "string", example: "2026-XXXXXXX" },
+                  clave: { type: "string", example: "XXXX" },
                 },
               },
               examples: {
-                "EN PROCESO (Audiencia)": { value: { usuario: "2026-0010582", clave: "4176" } },
-                "DOCUMENTO REGISTRADO (Petición)": { value: { usuario: "2026-0003984", clave: "2851" } },
-                "SE EMITIO RESPUESTA (Recurso)": { value: { usuario: "2026-0012476", clave: "9634" } },
-                "EN PROCESO (Denuncia)": { value: { usuario: "2026-0004721", clave: "1548" } },
+                "Ejemplo generico": { value: { usuario: "2026-XXXXXXX", clave: "XXXX" } },
               },
             },
           },

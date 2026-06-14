@@ -86,7 +86,7 @@ function validarFormulario(usuario, clave) {
     return {
       esValido: false,
       campo: "usuario",
-      mensaje: "El numero de expediente es obligatorio. Ejemplo: 2026-0010582.",
+      mensaje: "El numero de expediente es obligatorio. Ejemplo: 2026-XXXXXXX.",
     };
   }
 
