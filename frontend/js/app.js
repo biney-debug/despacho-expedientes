@@ -19,6 +19,9 @@ const ESTADOS_TRAMITE = [
 const formulario = document.querySelector("#formulario-consulta");
 const usuarioInput = document.querySelector("#usuario");
 const claveInput = document.querySelector("#clave");
+const botonMostrarClave = document.querySelector("#boton-mostrar-clave");
+const iconoMostrarClave = botonMostrarClave.querySelector(".icono-mostrar");
+const iconoOcultarClave = botonMostrarClave.querySelector(".icono-ocultar");
 const botonConsultar = document.querySelector("#boton-consultar");
 const btnTexto = botonConsultar.querySelector(".btn-texto");
 const btnSpinner = botonConsultar.querySelector(".btn-spinner");
@@ -116,6 +119,16 @@ function validarFormulario(usuario, clave) {
 
   return { esValido: true };
 }
+
+botonMostrarClave.addEventListener("click", () => {
+  const mostrar = claveInput.type === "password";
+
+  claveInput.type = mostrar ? "text" : "password";
+  botonMostrarClave.setAttribute("aria-pressed", String(mostrar));
+  botonMostrarClave.setAttribute("aria-label", mostrar ? "Ocultar clave" : "Mostrar clave");
+  iconoMostrarClave.hidden = mostrar;
+  iconoOcultarClave.hidden = !mostrar;
+});
 
 function marcarCampoInvalido(idCampo) {
   if (!idCampo) return;

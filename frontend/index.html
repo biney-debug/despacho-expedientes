@@ -7,10 +7,17 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <div class="franja-bandera" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+
   <header class="site-header">
-    <div class="container">
-      <h1>Despacho Presidencial</h1>
-      <p class="subtitle">Consulta el estado de tu expediente en cualquier momento</p>
+    <div class="container site-header-contenido">
+      <div>
+        <p class="eyebrow-header">Gobierno del Peru</p>
+        <h1>Despacho Presidencial</h1>
+        <p class="subtitle">Consulta el estado de tu expediente en cualquier momento</p>
+      </div>
     </div>
   </header>
 
@@ -41,17 +48,36 @@
 
           <div class="field-group">
             <label for="clave">Clave de acceso</label>
-            <input
-              id="clave"
-              name="clave"
-              type="password"
-              inputmode="numeric"
-              autocomplete="one-time-code"
-              placeholder="Ingresa tu clave"
-              aria-describedby="clave-ayuda"
-              maxlength="4"
-              required
-            />
+            <div class="input-with-toggle">
+              <input
+                id="clave"
+                name="clave"
+                type="password"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                placeholder="Ingresa tu clave"
+                aria-describedby="clave-ayuda"
+                maxlength="4"
+                required
+              />
+              <button
+                type="button"
+                id="boton-mostrar-clave"
+                class="toggle-clave"
+                aria-pressed="false"
+                aria-label="Mostrar clave"
+              >
+                <svg class="icono-ojo icono-mostrar" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg class="icono-ojo icono-ocultar" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  <line x1="2" y1="2" x2="22" y2="22" />
+                </svg>
+              </button>
+            </div>
             <p id="clave-ayuda" class="field-help">Clave de 4 digitos entregada en Mesa de Partes.</p>
           </div>
         </div>
@@ -78,7 +104,6 @@
 
         <details class="tramite-item">
           <summary class="tramite-titulo">
-            <span class="tramite-icono" aria-hidden="true">📋</span>
             Solicitud de Audiencia Presidencial
             <span class="acordeon-indicador" aria-hidden="true"></span>
           </summary>
@@ -96,7 +121,6 @@
 
         <details class="tramite-item">
           <summary class="tramite-titulo">
-            <span class="tramite-icono" aria-hidden="true">✉️</span>
             Peticion Ciudadana
             <span class="acordeon-indicador" aria-hidden="true"></span>
           </summary>
@@ -114,7 +138,6 @@
 
         <details class="tramite-item">
           <summary class="tramite-titulo">
-            <span class="tramite-icono" aria-hidden="true">⚖️</span>
             Recurso de Reconsideracion
             <span class="acordeon-indicador" aria-hidden="true"></span>
           </summary>
@@ -133,7 +156,6 @@
 
         <details class="tramite-item">
           <summary class="tramite-titulo">
-            <span class="tramite-icono" aria-hidden="true">🔔</span>
             Denuncia Administrativa
             <span class="acordeon-indicador" aria-hidden="true"></span>
           </summary>
@@ -177,7 +199,10 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>Hackaton TransformaGob 2026 - Equipo 1500</p>
+      <div class="site-footer-contenido">
+        <p>Gobierno del Peru &middot; Despacho Presidencial</p>
+      </div>
+      <p class="creditos">Hackaton TransformaGob 2026 - Equipo 1500</p>
     </div>
   </footer>
 

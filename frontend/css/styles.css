@@ -9,7 +9,7 @@
 [hidden] { display: none !important; }
 
 :root {
-  --color-primary: #1a3c6e;
+  --color-primary: #6e1423;
   --color-secondary: #c8102e;
   --color-accent: #007a5a;
   --color-error: #b3261e;
@@ -21,7 +21,7 @@
   --color-border-strong: #8ca0bd;
   --radius: 8px;
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --font: "Segoe UI", system-ui, sans-serif;
+  --font: Georgia, "Times New Roman", Cambria, serif;
 }
 
 body {
@@ -40,10 +40,43 @@ body {
   padding: 0 16px;
 }
 
+.franja-bandera {
+  display: flex;
+  height: 5px;
+}
+
+.franja-bandera span {
+  flex: 1;
+}
+
+.franja-bandera span:nth-child(1),
+.franja-bandera span:nth-child(3) {
+  background: var(--color-primary);
+}
+
+.franja-bandera span:nth-child(2) {
+  background: #ffffff;
+}
+
 .site-header {
   background: var(--color-primary);
   color: #fff;
   padding: 20px 0;
+}
+
+.site-header-contenido {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+}
+
+.eyebrow-header {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+  text-transform: uppercase;
 }
 
 .site-header h1 {
@@ -127,13 +160,47 @@ input {
 
 input:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.15);
+  box-shadow: 0 0 0 3px rgba(110, 20, 35, 0.15);
   outline: none;
 }
 
 .field-help {
   color: var(--color-text-muted);
   font-size: 0.86rem;
+}
+
+.input-with-toggle {
+  position: relative;
+}
+
+.input-with-toggle input {
+  padding-right: 48px;
+}
+
+.toggle-clave {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+}
+
+.toggle-clave:hover {
+  color: var(--color-primary);
+}
+
+.toggle-clave:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .primary-button {
@@ -154,11 +221,11 @@ input:focus {
 }
 
 .primary-button:hover {
-  background: #102f5c;
+  background: #4d0e18;
 }
 
 .primary-button:focus {
-  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.22);
+  box-shadow: 0 0 0 3px rgba(110, 20, 35, 0.22);
   outline: none;
 }
 
@@ -175,7 +242,7 @@ input:focus {
 }
 
 .message-info {
-  background: #e8f0fb;
+  background: #f7e8ec;
   color: var(--color-primary);
 }
 
@@ -400,11 +467,6 @@ details[open] .acordeon-indicador {
   transform: rotate(-135deg);
 }
 
-.tramite-icono {
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-
 .tramite-contenido {
   display: grid;
   gap: 10px;
@@ -435,7 +497,7 @@ details[open] .acordeon-indicador {
 }
 
 .tramite-tiempo {
-  background: #f0f5ff;
+  background: #f7e8ec;
   border-left: 3px solid var(--color-primary);
   border-radius: 0 var(--radius) var(--radius) 0;
   color: var(--color-text);
@@ -480,11 +542,24 @@ details[open] .acordeon-indicador {
 
 .site-footer {
   background: var(--color-primary);
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   text-align: center;
   padding: 16px 0;
   font-size: 0.8rem;
   margin-top: 40px;
+}
+
+.site-footer-contenido {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.site-footer .creditos {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+  margin-top: 6px;
 }
 
 @media (min-width: 600px) {
