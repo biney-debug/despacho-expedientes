@@ -6,6 +6,8 @@
   padding: 0;
 }
 
+[hidden] { display: none !important; }
+
 :root {
   --color-primary: #1a3c6e;
   --color-secondary: #c8102e;
