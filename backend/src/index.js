@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const expedientesRouter = require("./routes/expedientes");
+const rateLimiter = require("./middleware/rateLimiter");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -74,7 +75,12 @@ const swaggerSpec = {
   },
 };
 
-app.use(cors());
+const allowedOrigins = (process.env.CORS_ORIGIN || "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: allowedOrigins.length ? allowedOrigins : "*" }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -106,7 +112,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-app.use("/api/expedientes", expedientesRouter);
+app.use("/api/expedientes", rateLimiter, expedientesRouter);
 
 app.listen(PORT, () => {
   console.log(`Backend corriendo en puerto ${PORT}`);

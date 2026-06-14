@@ -73,6 +73,20 @@ chore(docker): agregar docker-compose.yml con backend y frontend
 `.env` **nunca se commitea**. Está en `.gitignore` desde el primer commit.  
 Las credenciales de prueba de la API del DP no van en el código fuente. La URL de integración se configura únicamente con la variable `API_DP_URL`.
 
+### Rate Limiting
+
+El endpoint `POST /api/expedientes/consultar` está protegido con `express-rate-limit`. El límite por defecto es **20 peticiones por minuto por IP**. Si se supera, el servidor responde `429` con un mensaje ciudadano. Configurable con la variable `RATE_LIMIT_MAX`.
+
+### CORS
+
+La variable `CORS_ORIGIN` controla qué orígenes pueden consumir la API. Soporta múltiples valores separados por coma. Si está vacía, permite cualquier origen (modo dev).
+
+| Entorno | `CORS_ORIGIN` |
+|---|---|
+| Docker Compose | `http://localhost:8080` |
+| Producción | `https://dominio-real.gob.pe` |
+| Desarrollo local (file://) | vacío |
+
 ## Accesibilidad
 
 El portal cumple con las pautas **WCAG 2.1 nivel AA**:
