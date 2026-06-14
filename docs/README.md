@@ -109,3 +109,18 @@ La respuesta exitosa muestra los datos principales del expediente y una línea d
 Se implementó el **módulo de orientación de trámites** como acordeón accesible (`<details>/<summary>`) con los cuatro tipos de procedimiento del Despacho Presidencial: Solicitud de Audiencia Presidencial, Petición Ciudadana, Recurso de Reconsideración y Denuncia Administrativa. Cada sección incluye descripción, requisitos y tiempo estimado de respuesta, más una sección de FAQs estáticas.
 
 En accesibilidad: se agregó spinner visual en el botón durante la consulta, `aria-invalid` con foco automático en el campo erróneo, `aria-busy` en el formulario durante la carga, mensajes de error reescritos en lenguaje ciudadano y verificación de contraste WCAG AA en todos los colores del portal.
+
+## Avance del turno de Cristina
+
+**Pulido UX/UI:** se corrigió la jerarquía tipográfica en móvil (375px), donde el `h1` del header (1.25rem) quedaba más pequeño que los `h2` de sección (1.35rem); ahora el `h1` usa 1.4rem para mantener al título principal como el elemento de mayor jerarquía visual en ambos breakpoints. Se agregó `maxlength="4"` al campo de clave y una validación de formato (4 dígitos) en el cliente, alineada con el texto de ayuda del campo.
+
+**Pruebas QA (4 escenarios) contra la API real del DP:**
+
+| Escenario | Resultado |
+|---|---|
+| Expediente válido (`2026-0010582` / `4176`) | `200` — datos y línea de tiempo se renderizan correctamente |
+| Clave incorrecta | API responde `401` → backend devuelve `404` "Expediente no encontrado o clave incorrecta" |
+| Campo vacío | El formulario bloquea el envío antes de llamar a la API, con mensaje específico por campo |
+| API caída / sin respuesta | `dpService` captura el error de red y devuelve `503` "El servicio del Despacho Presidencial no está disponible en este momento" |
+
+También se verificaron los 4 expedientes de prueba (los tres estados `DOCUMENTO REGISTRADO`, `EN PROCESO` y `SE EMITIO RESPUESTA`, incluyendo la variante con tilde `SE EMITIÓ RESPUESTA`) y se confirmó que `normalizarEstado` los mapea correctamente en la línea de tiempo.
