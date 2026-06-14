@@ -106,6 +106,14 @@ function validarFormulario(usuario, clave) {
     };
   }
 
+  if (!/^\d{4}$/.test(clave)) {
+    return {
+      esValido: false,
+      campo: "clave",
+      mensaje: "La clave debe tener 4 digitos. La encontraras en el comprobante de tu tramite.",
+    };
+  }
+
   return { esValido: true };
 }
 
