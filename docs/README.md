@@ -103,6 +103,20 @@ El portal cumple con las pautas **WCAG 2.1 nivel AA**:
 - El módulo de orientación usa `<details>/<summary>` nativo: navegable con teclado (Tab + Enter/Space) y compatible con lectores de pantalla sin JavaScript adicional.
 - Navegación completa por teclado verificada: Tab, Shift+Tab, Enter, Space.
 
+## Avance del turno de Miguel
+
+**Estructura base del proyecto:** se inicializó el repositorio GitHub con la estructura de carpetas del plan (`backend/`, `frontend/`, `docs/`), `.gitignore` con exclusiones de `.env`, `node_modules` y `dist`, `.env.example` con las variables requeridas (`API_DP_URL`, `PORT`, `CORS_ORIGIN`, `RATE_LIMIT_MAX`) y `docker-compose.yml` inicial con servicios backend y frontend.
+
+**Endpoint proxy seguro:** se creó el endpoint principal `POST /api/expedientes/consultar` en Node.js/Express, que recibe `{ usuario, clave }` del frontend y los reenvía internamente a la API oficial del Despacho Presidencial (configurada en `API_DP_URL`). El endpoint incluye validación de campos obligatorios (responde `400` si faltan), manejo de `404` (expediente no encontrado o clave incorrecta) y `503` (API del DP no disponible), y devuelve siempre la estructura uniforme `{ success, data?, error? }`. La lógica de llamada externa se separó en `services/dpService.js` y la validación en `middleware/validate.js`.
+
+**Dockerización del backend:** se creó el `Dockerfile` del backend y el `.dockerignore` correspondiente, permitiendo que `docker compose up` construya la imagen sin necesidad de instalar Node.js o dependencias manualmente en la máquina host.
+
+**Swagger UI:** se integró `swagger-ui-express` en `/api-docs` con la especificación OpenAPI 3.0 del endpoint de consulta, incluyendo ejemplos de request/response y los esquemas de errores (`400`, `404`, `503`). Se corrigió la ruta de carga de `.env` para usar `path.resolve(__dirname, '../../.env')` y evitar que `dotenv` fallara al levantar el backend desde distintos directorios de trabajo.
+
+**Documentación inicial:** se crearon `docs/README.md`, `docs/arquitectura.md`, `docs/api-referencia.md` y `docs/decisiones.md` con el ADR-001 que registra la decisión de arquitectura de proxy backend (contexto, decisión y consecuencias).
+
+**Rate limiting (corrección en producción):** se detectó que `express-rate-limit` no aplicaba correctamente en Hugging Face Spaces porque la cadena Cloudflare + HF load balancer hace que `req.ip` resuelva siempre a la IP del proxy, no a la del ciudadano. Se corrigió con `app.set("trust proxy", 1)` y un `keyGenerator` personalizado que lee el primer valor de `X-Forwarded-For` directamente, garantizando que cada usuario tenga su propio bucket de 20 req/min. Verificado: requests 1–20 pasan, request 21 recibe `429` con mensaje ciudadano en JSON.
+
 ## Avance del turno de Franck
 
 Se implementó el formulario ciudadano de consulta de expediente en el frontend, con validación de campos obligatorios, consumo del endpoint proxy `POST /api/expedientes/consultar`, estado de carga y mensajes de error orientados al ciudadano.
