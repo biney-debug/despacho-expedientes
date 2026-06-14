@@ -166,9 +166,9 @@ La pestaña dispara automáticamente `window.print()`, permitiendo al ciudadano 
 **Frontend en Vercel:** desplegado desde `frontend/` con `vercel.json` (rewrite de `/api/*` hacia el Space de HF) y `.vercelignore` excluyendo `server.js`/`nginx.conf`. Se agregó `"framework": null` en `vercel.json` para evitar que Vercel detectara el proyecto como una app Node por la presencia de `server.js` y fallara el build con "No entrypoint found".
 
 **Verificación end-to-end en producción:**
-- Frontend: https://frontend-mu-six-70.vercel.app → `200 OK`
+- Frontend: https://despacho-expedientes.vercel.app → `200 OK`
 - Backend: https://tcajox-despacho-expedientes-backend.hf.space → `200 OK` (`/api-docs` con Swagger UI)
 - CORS validado: `access-control-allow-origin` responde con el dominio de Vercel
 - Consulta de expediente de prueba (`2026-0010582` / `4176`) a través del rewrite `frontend → /api/expedientes/consultar` devuelve `200` con datos y estado `EN PROCESO`, igual que en local
 
-**Portal en producción:** https://frontend-mu-six-70.vercel.app
+**Portal en producción:** https://despacho-expedientes.vercel.app
