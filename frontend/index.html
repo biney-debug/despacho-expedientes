@@ -3,37 +3,206 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consulta de Expedientes — Despacho Presidencial</title>
+  <title>Consulta de Expedientes - Despacho Presidencial</title>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
+  <div class="franja-bandera" aria-hidden="true">
+    <span></span><span></span><span></span>
+  </div>
+
   <header class="site-header">
-    <div class="container">
-      <h1>Despacho Presidencial</h1>
-      <p class="subtitle">Consulta el estado de tu expediente</p>
+    <div class="container site-header-contenido">
+      <div>
+        <p class="eyebrow-header">Gobierno del Peru</p>
+        <h1>Despacho Presidencial</h1>
+        <p class="subtitle">Consulta el estado de tu expediente en cualquier momento</p>
+      </div>
     </div>
   </header>
 
   <main class="container">
-    <!-- Formulario de búsqueda — implementado por Franck (Turno 2) -->
     <section id="seccion-consulta" aria-label="Formulario de consulta de expediente">
-      <div id="formulario-placeholder" class="card">
-        <p>Formulario de consulta — pendiente Turno 2 (Franck)</p>
+      <form id="formulario-consulta" class="card consulta-card" novalidate>
+        <div class="section-heading">
+          <p class="eyebrow">Portal ciudadano</p>
+          <h2>Consulta de expediente</h2>
+          <p>Ingresa tu numero de expediente y clave de acceso para conocer el estado actual de tu tramite.</p>
+        </div>
+
+        <div class="form-grid">
+          <div class="field-group">
+            <label for="usuario">Numero de expediente</label>
+            <input
+              id="usuario"
+              name="usuario"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              placeholder="2026-XXXXXXX"
+              aria-describedby="usuario-ayuda"
+              required
+            />
+            <p id="usuario-ayuda" class="field-help">Formato esperado: 2026-XXXXXXX.</p>
+          </div>
+
+          <div class="field-group">
+            <label for="clave">Clave de acceso</label>
+            <div class="input-with-toggle">
+              <input
+                id="clave"
+                name="clave"
+                type="password"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                placeholder="Ingresa tu clave"
+                aria-describedby="clave-ayuda"
+                maxlength="4"
+                required
+              />
+              <button
+                type="button"
+                id="boton-mostrar-clave"
+                class="toggle-clave"
+                aria-pressed="false"
+                aria-label="Mostrar clave"
+              >
+                <svg class="icono-ojo icono-mostrar" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <svg class="icono-ojo icono-ocultar" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" hidden>
+                  <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  <line x1="2" y1="2" x2="22" y2="22" />
+                </svg>
+              </button>
+            </div>
+            <p id="clave-ayuda" class="field-help">Clave de 4 digitos entregada en Mesa de Partes.</p>
+          </div>
+        </div>
+
+        <button id="boton-consultar" class="primary-button" type="submit">
+          <span class="btn-texto">Consultar estado</span>
+          <span class="btn-spinner" aria-hidden="true" hidden></span>
+        </button>
+
+        <div id="mensaje-consulta" class="message" role="status" aria-live="polite" hidden></div>
+      </form>
+    </section>
+
+    <section id="seccion-resultado" aria-label="Estado del expediente" hidden></section>
+
+    <section id="seccion-orientacion" class="card" aria-label="Orientacion sobre tipos de tramite">
+      <div class="section-heading">
+        <p class="eyebrow">Guia ciudadana</p>
+        <h2>¿Que tipo de tramite necesitas?</h2>
+        <p>Conoce los requisitos y tiempos estimados de cada procedimiento ante el Despacho Presidencial.</p>
       </div>
-    </section>
 
-    <!-- Resultado y línea de tiempo — implementado por Franck (Turno 2) -->
-    <section id="seccion-resultado" aria-label="Estado del expediente" hidden>
-    </section>
+      <div class="acordeon">
 
-    <!-- Módulo de orientación — implementado por Antuaneth (Turno 3) -->
-    <section id="seccion-orientacion" aria-label="Orientación sobre tipos de trámite">
+        <details class="tramite-item">
+          <summary class="tramite-titulo">
+            Solicitud de Audiencia Presidencial
+            <span class="acordeon-indicador" aria-hidden="true"></span>
+          </summary>
+          <div class="tramite-contenido">
+            <p class="tramite-descripcion">Pedido formal para reunirse con el Presidente de la Republica o su representante para tratar un asunto de interes personal, colectivo o de interes publico.</p>
+            <h3>Requisitos</h3>
+            <ul>
+              <li>DNI vigente del solicitante</li>
+              <li>Carta de solicitud firmada dirigida al Presidente, con motivo claro y concreto</li>
+              <li>Documentos de respaldo que sustenten el pedido (si aplica)</li>
+            </ul>
+            <p class="tramite-tiempo"><strong>Tiempo estimado de respuesta:</strong> 15 a 30 dias habiles</p>
+          </div>
+        </details>
+
+        <details class="tramite-item">
+          <summary class="tramite-titulo">
+            Peticion Ciudadana
+            <span class="acordeon-indicador" aria-hidden="true"></span>
+          </summary>
+          <div class="tramite-contenido">
+            <p class="tramite-descripcion">Solicitud escrita que un ciudadano dirige al Presidente de la Republica sobre cualquier asunto de interes personal, colectivo o de interes publico que sea de su competencia.</p>
+            <h3>Requisitos</h3>
+            <ul>
+              <li>DNI vigente del solicitante</li>
+              <li>Carta con nombre completo, domicilio y exposicion clara del pedido</li>
+              <li>Documentos de sustento, si los hubiera</li>
+            </ul>
+            <p class="tramite-tiempo"><strong>Tiempo estimado de respuesta:</strong> 15 dias habiles</p>
+          </div>
+        </details>
+
+        <details class="tramite-item">
+          <summary class="tramite-titulo">
+            Recurso de Reconsideracion
+            <span class="acordeon-indicador" aria-hidden="true"></span>
+          </summary>
+          <div class="tramite-contenido">
+            <p class="tramite-descripcion">Impugnacion de un acto administrativo previo emitido por el Despacho Presidencial, solicitando su revision y modificacion sobre la base de una nueva prueba documental.</p>
+            <h3>Requisitos</h3>
+            <ul>
+              <li>DNI vigente del recurrente</li>
+              <li>Copia del acto administrativo que se impugna</li>
+              <li>Escrito de recurso con fundamentos legales</li>
+              <li>Nueva prueba documental no presentada anteriormente</li>
+            </ul>
+            <p class="tramite-tiempo"><strong>Tiempo estimado de respuesta:</strong> 30 dias habiles</p>
+          </div>
+        </details>
+
+        <details class="tramite-item">
+          <summary class="tramite-titulo">
+            Denuncia Administrativa
+            <span class="acordeon-indicador" aria-hidden="true"></span>
+          </summary>
+          <div class="tramite-contenido">
+            <p class="tramite-descripcion">Comunicacion formal sobre presuntas irregularidades, faltas o infracciones cometidas por funcionarios o entidades del Poder Ejecutivo que sean de competencia del Despacho Presidencial.</p>
+            <h3>Requisitos</h3>
+            <ul>
+              <li>DNI vigente del denunciante</li>
+              <li>Descripcion detallada del hecho: fechas, lugares y personas involucradas</li>
+              <li>Documentos de respaldo: contratos, fotografias, declaraciones juradas u otros</li>
+            </ul>
+            <p class="tramite-tiempo"><strong>Tiempo estimado de respuesta:</strong> 30 dias habiles</p>
+          </div>
+        </details>
+
+      </div>
+
+      <section class="faqs" aria-label="Preguntas frecuentes">
+        <h3>Preguntas frecuentes</h3>
+        <dl class="faqs-lista">
+          <div class="faq-item">
+            <dt>¿Donde presento mis documentos?</dt>
+            <dd>En la Mesa de Partes del Despacho Presidencial (Palacio de Gobierno, Jr. de la Union 600, Lima) o a traves de los canales digitales autorizados.</dd>
+          </div>
+          <div class="faq-item">
+            <dt>¿Como obtengo mi numero de expediente y clave?</dt>
+            <dd>Se le entrega al ingresar su tramite en Mesa de Partes. Conservela en un lugar seguro; es necesaria para consultar el estado de su expediente en este portal.</dd>
+          </div>
+          <div class="faq-item">
+            <dt>¿Puedo consultar desde mi celular?</dt>
+            <dd>Si. Este portal funciona en cualquier celular o computadora con acceso a internet, sin necesidad de instalar ninguna aplicacion.</dd>
+          </div>
+          <div class="faq-item">
+            <dt>¿Que significa cada estado?</dt>
+            <dd><strong>Documento Registrado:</strong> su solicitud ingreso al sistema. <strong>En Proceso:</strong> esta siendo evaluada por el area competente. <strong>Se Emitio Respuesta:</strong> el Despacho Presidencial genero una respuesta formal.</dd>
+          </div>
+        </dl>
+      </section>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container">
-      <p>Hackaton TransformaGob 2026 &mdash; Equipo 1500</p>
+      <div class="site-footer-contenido">
+        <p>Gobierno del Peru &middot; Despacho Presidencial</p>
+      </div>
+      <p class="creditos">Hackaton TransformaGob 2026 - Equipo 1500</p>
     </div>
   </footer>
 

@@ -24,8 +24,8 @@ async function consultarExpediente(usuario, clave) {
   } catch (err) {
     if (err.response) {
       const status = err.response.status;
-      if (status === 404) {
-        return { success: false, status: 404, error: "Expediente no encontrado" };
+      if ([401, 403, 404].includes(status)) {
+        return { success: false, status: 404, error: "Expediente no encontrado o clave incorrecta" };
       }
       return { success: false, status: 502, error: "Error al comunicarse con el Despacho Presidencial" };
     }
